@@ -13,20 +13,26 @@ const use = (names)=>{
   });
 };
 
-const useModel = (name)=>{
+const useModel = (name,withInput=false)=>{
   const module = models[name];
   const [values,setValues] = Recoil.useRecoilState(module);
   const interfaces = React.useMemo(()=>{
     const hash = {};
-    Object.keys(values).forEach(key=>{
+    Object.keys(values||{}).forEach(key=>{
       const value = values[key];
       const setValue = (nextValue)=>setValues(({...vs})=>{
         vs[key] = typeof nextValues === 'function' ? nextValue(vs[key]) : nextValue
         return vs;
       });
-      const input = (type)=>Types[type](value,setValue);
-      hash[key] = {value,setValue,input};
+      if(withInput) {
+        const input = (type)=>Types[type](value,setValue);
+        hash[key] = {value,setValue,input};
+      } else {
+        hash[key] = {value,setValue};
+      }
     });
+    hash['values'] = values;
+    hash['setValues'] = setValues;
     return hash;
   },[values]);
   return interfaces;

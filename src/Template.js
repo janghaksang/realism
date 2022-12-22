@@ -5,7 +5,7 @@ import './Template.css';
 
 export default function Template() {
   return (
-    <div className="Template">
+    <div {...{className:classnames('Template')}>
     </div>
   );
 }
