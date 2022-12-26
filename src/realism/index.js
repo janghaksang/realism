@@ -1,6 +1,5 @@
 import React from 'react';
 import Recoil from 'recoil';
-import * as Types from './types';
 
 const modules = {};
 const models = {};
@@ -13,7 +12,7 @@ const use = (names)=>{
   });
 };
 
-const useModel = (name,withInput=false)=>{
+const useModel = (name)=>{
   const module = models[name];
   const [values,setValues] = Recoil.useRecoilState(module);
   const interfaces = React.useMemo(()=>{
@@ -24,12 +23,7 @@ const useModel = (name,withInput=false)=>{
         vs[key] = typeof nextValues === 'function' ? nextValue(vs[key]) : nextValue
         return vs;
       });
-      if(withInput) {
-        const input = (type)=>Types[type](value,setValue);
-        hash[key] = {value,setValue,input};
-      } else {
-        hash[key] = {value,setValue};
-      }
+      hash[key] = {value,setValue};
     });
     hash['values'] = values;
     hash['setValues'] = setValues;

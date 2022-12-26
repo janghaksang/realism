@@ -1,6 +1,15 @@
 import React from 'react';
 import Recoil from 'recoil';
 import classnames from 'classnames';
+import Text from 'atomics/Text';
+import Password from 'atomics/Password';
+import Checkbox from 'atomics/Checkbox';
+import Textarea from 'atomics/Textarea';
+import Select from 'atomics/Select';
+import * as Validator from 'utils/Validator';
+
+const validate_url = Validator.uri();
+const validate_latin = (value)=>new RegExp(/^([0-9a-zA-Z])*$/i).test(value);
 
 export default function LoginView(props) {
   const {
@@ -15,42 +24,42 @@ export default function LoginView(props) {
     <form {...{className:classnames('LoginView')}} onSubmit={onSubmit}>
       <div>
         <span>ACCOUNT</span>
-        <input
-          {...account.input('text')}
+        <Text
+          {...{validate:validate_latin}}
+          {...account}
           />
       </div>
       <div>
         <span>PASSWORD</span>
-        <input
-          {...password.input('password')}
+        <Password
+          {...{validate:validate_latin}}
+          {...password}
           />
       </div>
       <div>
         <span>HOST URL</span>
-        <input
-          {...host_url.input('text')}
+        <Text
+          {...{validate:validate_url}}
+          {...host_url}
           />
       </div>
       <div>
         <span>SAVE PASSWORD</span>
-        <input
-          {...save_password.input('checkbox')}
+        <Checkbox
+          {...save_password}
           />
       </div>
       <div>
         <span>ACCOUNT HISTORY</span>
-        <textarea
-          {...history_account.input('text')}
+        <Textarea
+          {...{defaultValue:history_account.value}}
           />
-        <select
+        <Select
           {...{
-            size:history_account.value.length
+            size:history_account.value.length,
+            list:history_account.value
           }}
-          >
-          {history_account.value.map(item=>(
-            <option {...{key:item,label:item,value:item}}/>
-          ))}
-        </select>
+          />
       </div>
       <div>
         <button type={'submit'}>SUBMIT</button>
