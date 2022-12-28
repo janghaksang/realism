@@ -6,9 +6,12 @@ import classnames from 'classnames';
 import './App.css';
 
 import Login from 'components/Login';
+import Diagram from 'components/Diagram';
 
 import Websocket from 'modules/Websocket';
 import Theme from 'modules/Theme';
+
+import useWindowResize from 'hooks/useWindowResize';
 
 Realism.use(['app']);
 export default function App() {
@@ -16,6 +19,8 @@ export default function App() {
   const onLogined = React.useCallback((data)=>{
     app.setValues(data);
   },[]);
+  useWindowResize();
+
   return (
     <div
       {...{
@@ -29,6 +34,7 @@ export default function App() {
           }}
           />
       )}
+      {app.values&&(<Diagram/>)}
       {app.values&&(<Websocket {...{url:app.ws_url.value}}/>)}
       <Theme
         {...{

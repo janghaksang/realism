@@ -1,0 +1,28 @@
+.Diagram {
+  display: flex;
+  flex: 1;
+
+  flex-direction: row;
+}
+
+.Text-Editor {
+  width: 500px;
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+}
+
+.Diagram-Editor {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+.Diagram-Editor-Content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+}

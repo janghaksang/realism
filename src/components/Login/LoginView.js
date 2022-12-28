@@ -20,6 +20,7 @@ export default function LoginView(props) {
     history_account,
     onSubmit,
   } = props;
+
   return (
     <form {...{className:classnames('LoginView')}} onSubmit={onSubmit}>
       <div>
